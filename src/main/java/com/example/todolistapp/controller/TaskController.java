@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.json.JSONObject;
 
 import java.util.List;
-
+// Allow requests to all origins
+@CrossOrigin("*")
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/api/tasks")
@@ -36,7 +37,7 @@ public class TaskController {
         return ResponseEntity.ok(getTask);
     }
     // Build getAllTasks REST API
-    @GetMapping("/getAll")
+    @GetMapping()
     public ResponseEntity<List<TaskDto>> getAllTasks()
     {
         List<TaskDto> getAllTasks = taskService.getAllTasks();
