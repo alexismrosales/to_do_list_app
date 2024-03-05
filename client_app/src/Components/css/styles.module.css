@@ -1,0 +1,40 @@
+.title{
+    @apply
+    text-5xl
+    drop-shadow-lg;
+    font-family: "Philosopher", sans-serif;
+    font-weight: 700;
+}
+.container{
+    @apply
+    flex
+    justify-center 
+    items-center
+}
+.mainDiv{
+    @apply
+    flex
+    justify-center
+    items-center
+}
+.tableDiv{
+    @apply
+    relative
+    shadow-md 
+    rounded-lg
+    w-1/2
+    
+}
+.table{
+    @apply
+    w-full
+    text-xl
+    text-left 
+    rtl:text-right 
+    rounded-lg
+}
+.tr{
+    @apply
+    bg-white
+    border-b
+}
