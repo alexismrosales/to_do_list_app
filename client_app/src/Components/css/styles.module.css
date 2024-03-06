@@ -8,15 +8,26 @@
 .container{
     @apply
     flex
+    flex-col
     justify-center 
     items-center
 }
-.mainDiv{
-    @apply
-    flex
-    justify-center
-    items-center
+.mainContainerInput{
+    @apply 
+    w-full
+    min-w-[42rem] 
+    h-7
+    pb-2
 }
+.mainInput{
+    @apply
+    relative
+    h-full
+    w-full;
+    font-family: "Philosopher", sans-serif;
+    font-weight: 700;
+}
+
 .tableDiv{
     @apply
     relative
