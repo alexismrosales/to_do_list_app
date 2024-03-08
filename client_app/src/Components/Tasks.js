@@ -1,42 +1,36 @@
 import React, {useEffect, useState} from "react";
-import { listTasks, addTask } from "../Services/TaskService";
+import { updateListTasks, createTask, updateTaskMessage, updateTaskStatus, removeTask } from "./CRUD";
 import style from './css/styles.module.css'
 
 function Tasks(){
-    
+    let counter = 1;
+
+    useEffect(() => { updateListTasks(setTasks);}, []);
+
     const [tasks, setTasks] = useState([]);
+
+    const [newMessage, setNewMessage] = useState('');
 
     const[message, setMessage] = useState('');
 
-    // show Tasks list
-    useEffect(() => { updateListTasks();}, []); 
-
-    function updateListTasks()
-    {
-        listTasks().then(response => {
-            setTasks(response.data);
-        }).catch(error => {
-            console.error("Connection error: ", error)
-        });
-    };
-    
-    function createTask(task)
-    {
-        addTask(task).then(response => {
-            console.log(response.data)
-            updateListTasks();
-        });
-    };
-    
- 
-    // enter input Event
-    const handleChange = (event) => { setMessage(event.target.value); };
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event, taskId) => {
         if(event.key === 'Enter'){
-            const task = { message }
-            // add Task
-            createTask(task)
+            if(taskId)
+            {   
+                const task = { message : message }
+                updateTaskMessage(taskId, task, setTasks);
+            }
+            else{
+                const task = { message : newMessage, done : "false" }
+                createTask(task, setTasks);
+            }
+            setNewMessage('');
         }
+    }
+
+    const updateStatusOnClick = (taskId, isDone) => {
+        const task = { done : !isDone }
+        updateTaskStatus(taskId, task, setTasks);
     }
 
     return(
@@ -45,8 +39,8 @@ function Tasks(){
                 <div className={style.mainContainerInput}>
                     <input className={style.mainInput}
                             placeholder="Write a task"
-                            value={message}
-                            onChange={handleChange}
+                            value={newMessage}
+                            onChange={(event) => { setNewMessage(event.target.value); }}
                             onKeyDown={handleKeyDown}/>
                 </div>
             </div>
@@ -57,8 +51,16 @@ function Tasks(){
                             tasks.map(task =>
                                 <tr className={style.tr} key={task.id}>
                                     <td className={style.td}>
-                                        <span className={style.message}>{task.message}</span>
-                                        <a className={style.a} ><svg className={style.svg} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M512 897.6c-108 0-209.6-42.4-285.6-118.4-76-76-118.4-177.6-118.4-285.6 0-108 42.4-209.6 118.4-285.6 76-76 177.6-118.4 285.6-118.4 108 0 209.6 42.4 285.6 118.4 157.6 157.6 157.6 413.6 0 571.2-76 76-177.6 118.4-285.6 118.4z m0-760c-95.2 0-184.8 36.8-252 104-67.2 67.2-104 156.8-104 252s36.8 184.8 104 252c67.2 67.2 156.8 104 252 104 95.2 0 184.8-36.8 252-104 139.2-139.2 139.2-364.8 0-504-67.2-67.2-156.8-104-252-104z" fill=""></path><path d="M707.872 329.392L348.096 689.16l-31.68-31.68 359.776-359.768z" fill=""></path><path d="M328 340.8l32-31.2 348 348-32 32z" fill=""></path></g></svg></a>
+                                        <p className={style.counter}>{counter++}</p>
+                                        <input 
+                                            className={task.done ? style.messageTrue : style.messageFalse}  
+                                            type="text" 
+                                            defaultValue={task.message}
+                                            onChange={(event) => { setMessage(event.target.value); }}
+                                            onKeyDown={(event) => handleKeyDown(event, task.id)}
+                                            />
+                                        <a className={style.a} onClick={() => updateStatusOnClick(task.id, task.done)} > <svg className={style.svg1} viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#394053"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M6.65263 14.0304C6.29251 13.6703 6.29251 13.0864 6.65263 12.7263C7.01276 12.3662 7.59663 12.3662 7.95676 12.7263L11.6602 16.4297L19.438 8.65183C19.7981 8.29171 20.382 8.29171 20.7421 8.65183C21.1023 9.01195 21.1023 9.59583 20.7421 9.95596L12.3667 18.3314C11.9762 18.7219 11.343 18.7219 10.9525 18.3314L6.65263 14.0304Z" fill="#394053"></path><path clip-rule="evenodd" d="M14 1C6.8203 1 1 6.8203 1 14C1 21.1797 6.8203 27 14 27C21.1797 27 27 21.1797 27 14C27 6.8203 21.1797 1 14 1ZM3 14C3 7.92487 7.92487 3 14 3C20.0751 3 25 7.92487 25 14C25 20.0751 20.0751 25 14 25C7.92487 25 3 20.0751 3 14Z" fill="#394053" fill-rule="evenodd"></path></g></svg> </a>
+                                        <a className={style.a} onClick={() => removeTask(task.id, setTasks)} > <svg className={style.svg2} viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#394053"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M2.32129 2.32363C2.72582 1.9191 3.38168 1.9191 3.78621 2.32363L25.6966 24.234C26.1011 24.6385 26.1011 25.2944 25.6966 25.6989C25.2921 26.1035 24.6362 26.1035 24.2317 25.6989L2.32129 3.78854C1.91676 3.38402 1.91676 2.72815 2.32129 2.32363Z" fill="#394053"></path><path d="M25.6787 2.30339C25.2742 1.89887 24.6183 1.89887 24.2138 2.30339L2.30339 24.2138C1.89887 24.6183 1.89887 25.2742 2.30339 25.6787C2.70792 26.0832 3.36379 26.0832 3.76831 25.6787L25.6787 3.76831C26.0832 3.36379 26.0832 2.70792 25.6787 2.30339Z" fill="#394053"></path></g></svg></a>
                                     </td>
                                 </tr>)
                         }

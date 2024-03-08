@@ -62,18 +62,59 @@
     pl-4
     pr-4
 }
-.message
+.messageTrue
 {
     @apply 
-    col-span-11
+    col-span-9
+    w-full
+    text-xl
+    bg-transparent
+    outline
+    outline-0
+    transition-all 
+    placeholder-shown:border 
+    border 
+    border-0
+    border-t-transparent 
+    focus:border-t-transparent 
+    text-sm px-3 py-2.5 
+    /*Extra props*/
+    text-[#989898]
+    line-through;
+    font-family: "Philosopher", sans-serif;
+    font-size: 1.4rem;
+}
+.messageFalse{
+    @apply 
+    col-span-9
+    w-full
+    text-xl
+    bg-transparent
+    outline
+    outline-0
+    transition-all 
+    placeholder-shown:border 
+    border 
+    border-0
+    border-t-transparent 
+    focus:border-t-transparent 
+    text-sm px-3 py-2.5;
+    font-family: "Philosopher", sans-serif;
+    font-size: 1.4rem;
 }
 .a{
     @apply
     text-end
 }
-.svg{
+.svg1{
     @apply
     pt-[0.5rem]
-    h-6
-    w-6
+    h-9
+    w-9
+}
+.svg2{
+    @apply
+    pt-[0.5rem]
+    h-7
+    w-7
 }
