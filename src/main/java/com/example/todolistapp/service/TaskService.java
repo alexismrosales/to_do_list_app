@@ -14,6 +14,9 @@ public interface TaskService {
 
     TaskDto updateTask(Long taskId, String Message);
 
+    // updateTaskStatus(Long Id, Boolean Done) : update task status given and Id
+    TaskDto updateTaskStatus(Long taskId, Boolean Done);
+
     TaskDto deleteTask(Long taskId);
 
 }

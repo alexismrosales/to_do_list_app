@@ -49,6 +49,16 @@ public class TaskServiceImplement implements TaskService {
         taskRepository.save(task);
         return TaskMapper.mapToTaskDto(task);
     }
+    @Override
+    // updateTaskStatus(Long Id, Boolean Done) : update task status given and Id
+    public TaskDto updateTaskStatus(Long taskId, Boolean status)
+    {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow( () -> new ResourceNotFoundException("Task "+taskId+" does not exist"));
+        task.setDone(status);
+        taskRepository.save(task);
+        return  TaskMapper.mapToTaskDto(task);
+    }
     // deleteTask(Long Id) : delete the task given an Id
     @Override
     public TaskDto deleteTask(Long taskId) {

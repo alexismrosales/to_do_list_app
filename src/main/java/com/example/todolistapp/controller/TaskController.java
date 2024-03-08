@@ -1,6 +1,7 @@
 package com.example.todolistapp.controller;
 
 import com.example.todolistapp.dto.TaskDto;
+import com.example.todolistapp.entity.Task;
 import com.example.todolistapp.service.TaskService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -54,8 +55,17 @@ public class TaskController {
         TaskDto updateTask = taskService.updateTask(taskId, textMessage);
         return ResponseEntity.ok(updateTask);
     }
+    // Build updateTaskStatusById REST API
+    @PostMapping("updateStatus/{id}")
+    public ResponseEntity<TaskDto> updateTaskStatusById(@PathVariable("id") Long taskId, @RequestBody String done)
+    {
+        JSONObject jsonObject = new JSONObject(done);
+        Boolean status = jsonObject.getBoolean("done");
+        TaskDto updateTask = taskService.updateTaskStatus(taskId, status);
+        return ResponseEntity.ok(updateTask);
+    }
     // Build updateTaskById REST API
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<TaskDto> deleteTask(@PathVariable("id") Long taskId)
     {
         taskService.deleteTask(taskId);

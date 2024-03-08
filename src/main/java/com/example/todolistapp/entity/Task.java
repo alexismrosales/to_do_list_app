@@ -17,4 +17,6 @@ public class Task {
     private Long id;
     @Column(name = "message")
     private String message;
+    @Column(name = "done")
+    private Boolean done;
 }

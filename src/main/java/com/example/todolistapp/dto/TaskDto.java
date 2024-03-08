@@ -13,4 +13,5 @@ import lombok.Setter;
 public class TaskDto {
     private Long id;
     private String message;
+    private Boolean done;
 }

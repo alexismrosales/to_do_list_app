@@ -8,7 +8,8 @@ public class TaskMapper {
     public static TaskDto mapToTaskDto(Task task){
         return new TaskDto(
                 task.getId(),
-                task.getMessage()
+                task.getMessage(),
+                task.getDone()
         );
     }
     //Mapping task dto to task entity
@@ -16,7 +17,8 @@ public class TaskMapper {
     {
         return new Task(
                 taskDto.getId(),
-                taskDto.getMessage()
+                taskDto.getMessage(),
+                taskDto.getDone()
         );
     }
 
