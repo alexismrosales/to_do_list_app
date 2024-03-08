@@ -118,3 +118,11 @@
     h-7
     w-7
 }
+.footer {
+    @apply
+    absolute
+    text-xl
+
+    justify-center
+    bottom-0
+}

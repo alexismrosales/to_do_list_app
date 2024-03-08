@@ -1,15 +1,25 @@
 import React from 'react';
-import Header from './Header'
 import Tasks from './Tasks';
+
+import style from './css/styles.module.css'
 import './css/styles.css' ;
 
 function Task()
 {
     return (
-        <section>
-            <Header/>
+        <>
+             <nav>
+                <div className={style.container}>
+                    <p className={style.title}>To Do List</p>
+                </div>
+            </nav>
             <Tasks/>
-        </section>
+            <footer>
+                    <p className={style.footer}>
+                        Made by @Alexis M.Rosales
+                    </p>
+            </footer>
+        </>
     )
 }
 export default Task;
